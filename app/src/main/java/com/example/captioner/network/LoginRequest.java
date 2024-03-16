@@ -1,8 +1,7 @@
-package com.example.captioner.model;
+package com.example.captioner.network;
 
 public class LoginRequest {
     private String email;
-
     private String password;
 
     public LoginRequest(String email, String password) {
@@ -10,15 +9,12 @@ public class LoginRequest {
         this.password = password;
     }
 
-    // 其他字段和方法
-
-    // 以下是字段的 getter 和 setter 方法
-    public String getUsername() {
+    public String getEmail() {
         return email;
     }
 
-    public void setUsername(String username) {
-        this.email = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
