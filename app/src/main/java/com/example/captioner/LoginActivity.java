@@ -37,12 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String username = emailEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         // 假设你已经创建了RetrofitClient类和LoginService接口
         LoginService service = RetrofitClient.getClient("http://10.0.2.2:8080/").create(LoginService.class);
-        Call<UserResponse> call = service.loginUser(new LoginRequest(username, password));
+        Call<UserResponse> call = service.loginUser(new LoginRequest(email, password));
 
         call.enqueue(new Callback<UserResponse>() {
             @Override

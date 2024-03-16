@@ -1,37 +1,38 @@
 package com.example.captioner.network;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserResponse {
-    private String token;
-    public class userResponse {
-        private String email;
-        private String name;
-        private String Token;
+    @SerializedName("name")
+    private String name;
 
+    @SerializedName("email")
+    private String email;
 
-        public String getEmail() {
-            return email;
-        }
+    @SerializedName("password")
+    private String password;
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+    public String getName() {
+        return name;
     }
 
-    public String getToken() {
-        return token;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public String getEmail() {
+        return email;
     }
 
-    // 如果还有其他字段，也应该为它们提供getters和setters
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
