@@ -2,6 +2,7 @@ package com.example.captioner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,10 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
 
         // 假设你已经创建了RetrofitClient类和LoginService接口
-        LoginService service = RetrofitClient.getClient("http://10.0.2.2:8080/").create(LoginService.class);
+        LoginService service = RetrofitClient.getClient("http://192.168.7.82:8080/").create(LoginService.class);
         Call<UserResponse> call = service.loginUser(new LoginRequest(email, password));
 
-        call.enqueue(new Callback<UserResponse>() {
+        /*call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -60,8 +61,36 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 // 网络错误或请求失败逻辑
+                Log.d("ss", "onFailure: "+t.getMessage());
                 Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });*/
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.isSuccessful()) {
+                    UserResponse responseBody = response.body();
+                    if (responseBody != null && responseBody.isSuccess()) {
+                        // 登录成功逻辑
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        Toast.makeText(LoginActivity.this, responseBody.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 登录失败逻辑
+                        Toast.makeText(LoginActivity.this, responseBody.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // HTTP 错误处理
+                    Toast.makeText(LoginActivity.this, "Login failed: " + response.code() + " - " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
+
+
     }
 }
