@@ -38,7 +38,12 @@ public class LoginActivity extends AppCompatActivity {
         signupButton.setOnClickListener(v -> {
             // Start the Register activity
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-        });    }
+        });
+        forgetPasswordButton.setOnClickListener(v -> {
+            // Start the Register activity
+            startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+        });
+    }
 
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
