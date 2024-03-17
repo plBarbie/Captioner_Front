@@ -19,11 +19,13 @@ public class HomeActivity extends AppCompatActivity {
         bookingButton.setOnClickListener(v -> {
             // Start the booking activity
             startActivity(new Intent(HomeActivity.this, BookingActivity.class));
+            finish();
         });
 
         bookedButton.setOnClickListener(v -> {
             // Start the booked activity
             startActivity(new Intent(HomeActivity.this, BookedActivity.class));
+            finish();
         });
     }
 }
