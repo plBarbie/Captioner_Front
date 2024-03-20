@@ -1,15 +1,15 @@
 package com.example.captioner;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.captioner.HomeActivity;
-import com.example.captioner.R;
 import com.example.captioner.network.LoginRequest;
 import com.example.captioner.network.LoginService;
 import com.example.captioner.network.RetrofitClient;
@@ -44,13 +44,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
         });
     }
-
+//    String backendUrl = getString(R.string.backend_url);
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         // 假设你已经创建了RetrofitClient类和LoginService接口
-        LoginService service = RetrofitClient.getClient("http://192.168.7.82:8080/").create(LoginService.class);
+        LoginService service = RetrofitClient.getClient("http://10.29.1.170:8080/").create(LoginService.class);
         Call<UserResponse> call = service.loginUser(new LoginRequest(email, password));
 
         call.enqueue(new Callback<UserResponse>() {
@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     UserResponse responseBody = response.body();
                     if (responseBody != null && responseBody.isSuccess()) {
                         // 登录成功逻辑
+                        System.out.println("niubi");
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         Toast.makeText(LoginActivity.this, responseBody.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
@@ -79,5 +80,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
+    }
+    private void saveUserEmail(String userEmail) {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_email", userEmail);
+        editor.apply();
     }
 }

@@ -1,17 +1,15 @@
 package com.example.captioner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.captioner.network.ForgetPasswordRequest;
 import com.example.captioner.network.ForgetPasswordService;
-import com.example.captioner.network.RegisterRequest;
-import com.example.captioner.network.RegisterService;
 import com.example.captioner.network.RetrofitClient;
 import com.example.captioner.network.UserResponse;
 
@@ -34,7 +32,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         forgetPasswordButton.setOnClickListener(v -> forgetPassword());
     }
-
+//    String backendUrl = getString(R.string.backend_url);
     private void forgetPassword() {
         String name = nameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
@@ -44,7 +42,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest(email, name, password);
 
         // 假设LoginService也用于注册，你可能需要根据实际情况调整
-        ForgetPasswordService service = RetrofitClient.getClient("http://192.168.7.82:8080/").create(ForgetPasswordService.class);
+        ForgetPasswordService service = RetrofitClient.getClient("http://10.29.1.170:8080/").create(ForgetPasswordService.class);
         Call<UserResponse> call = service.forgetPassword(forgetPasswordRequest);
 
         call.enqueue(new Callback<UserResponse>() {

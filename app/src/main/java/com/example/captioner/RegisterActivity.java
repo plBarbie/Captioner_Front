@@ -1,16 +1,18 @@
 package com.example.captioner;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.captioner.network.RegisterRequest;
-import com.example.captioner.network.LoginService;
 import com.example.captioner.network.RegisterService;
 import com.example.captioner.network.RetrofitClient;
 import com.example.captioner.network.UserResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(v -> registerUser());
     }
+//    String backendUrl = getString(R.string.backend_url);
 
     private void registerUser() {
         String name = nameEditText.getText().toString().trim();
@@ -41,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterRequest registerRequest = new RegisterRequest(name, email, password);
 
         // 假设LoginService也用于注册，你可能需要根据实际情况调整
-        RegisterService service = RetrofitClient.getClient("http://192.168.7.82:8080/").create(RegisterService.class);
+        RegisterService service = RetrofitClient.getClient("http://10.29.1.170:8080/").create(RegisterService.class);
         Call<UserResponse> call = service.registerUser(registerRequest);
 
         call.enqueue(new Callback<UserResponse>() {
