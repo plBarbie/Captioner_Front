@@ -1,28 +1,41 @@
 package com.example.captioner.network;
 
+import org.threeten.bp.LocalDateTime;
+
 public class BookingRequest {
-    private String userEmail;
-    private String playTitle;
+    private String title;
 
-    public BookingRequest(String userEmail, String playTitle) {
-        this.userEmail = userEmail;
-        this.playTitle = playTitle;
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
+
+    public BookingRequest(String title, LocalDateTime startTime, LocalDateTime endTime) {
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
-    // Getter and setter methods
-    public String getUserEmail() {
-        return userEmail;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPlayTitle() {
-        return playTitle;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setPlayTitle(String playTitle) {
-        this.playTitle = playTitle;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }
