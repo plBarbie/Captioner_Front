@@ -3,18 +3,14 @@ package com.example.captioner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.captioner.model.PlayBean;
-import com.example.captioner.network.BookingService;
+import com.example.captioner.network.BookService;
 import com.example.captioner.network.RetrofitClient;
 
 import java.util.ArrayList;
@@ -42,21 +38,20 @@ public class BookingActivity extends AppCompatActivity {
             finish();
         });
 
-
-        RecyclerView recyclerView = findViewById(R.id.recv);
+        RecyclerView recyclerView = findViewById(R.id.booking_plays);
         recyclerView.setAdapter(bookingAdapter);
 
-        bookingAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                Toast.makeText(BookingActivity.this, bookingAdapter.getItem(position).getTitle()+"", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        bookingAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+//                Toast.makeText(BookingActivity.this, bookingAdapter.getItem(position).getTitle()+"", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         // 使用 RetrofitClient 获取 Retrofit 实例
         Retrofit retrofit = RetrofitClient.getClient("http://10.29.1.170:8080/");
 
         // 使用 Retrofit 实例创建 API 接口实例
-        BookingService bookingService = retrofit.create(BookingService.class);
+        BookService bookingService = retrofit.create(BookService.class);
 
         Call<List<PlayBean>> call = bookingService.getPlays();
         call.enqueue(new Callback<List<PlayBean>>() {

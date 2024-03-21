@@ -12,14 +12,8 @@
         android:text="Home" />
 
     <!-- 戏剧列表 -->
-    <!--    <ListView-->
-    <!--        android:id="@+id/playsListView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_below="@id/returnButton"-->
-    <!--        android:padding="8dp"/>-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recv"
+        android:id="@+id/booking_plays"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/returnButton"
