@@ -48,7 +48,7 @@ public class BookingActivity extends AppCompatActivity {
 //            }
 //        });
         // 使用 RetrofitClient 获取 Retrofit 实例
-        Retrofit retrofit = RetrofitClient.getClient("http://10.29.1.170:8080/");
+        Retrofit retrofit = RetrofitClient.getClient("http://172.20.10.5:8080/");
 
         // 使用 Retrofit 实例创建 API 接口实例
         BookService bookingService = retrofit.create(BookService.class);

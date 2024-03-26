@@ -19,9 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookingAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
-    public BookingAdapter(@Nullable List<PlayBean> data) {
-        super(R.layout.booking_list_item, data);
+public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
+    public BookedAdapter(@Nullable List<PlayBean> data) {
+        super(R.layout.booked_list_item, data);
     }
 
     @Override
@@ -30,24 +30,24 @@ public class BookingAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
         baseViewHolder.setText(R.id.play_start_time, "Start Time: " + play.getStartTime());
         baseViewHolder.setText(R.id.play_end_time, "End Time: " + play.getEndTime());
 
-        // 为“Book”按钮设置点击监听器
-        baseViewHolder.getView(R.id.book_button).setOnClickListener(v -> {
+        // 为“cancel”按钮设置点击监听器
+        baseViewHolder.getView(R.id.cancel_button).setOnClickListener(v -> {
             // 创建 PlayDTO 仅包含 title 用于预订操作
             PlayDTO playDTO = new PlayDTO();
-            playDTO.setTitle(play.getTitle());
+            playDTO.getTitle(play.getTitle());
 
             // 使用Retrofit发起网络请求
             BookService service = RetrofitClient.getClient("http://172.20.10.5:8080/").create(BookService.class);
-            Call<UserResponse> call = service.bookPlay(playDTO);
+            Call<UserResponse> call = service.cancelPlay(playDTO);
             call.enqueue(new Callback<UserResponse>() {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if (response.isSuccessful()) {
                         // 预订成功
-                        Toast.makeText(getContext(), "Booked successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Canceled successfully!", Toast.LENGTH_SHORT).show();
                     } else {
                         // 处理错误情况
-                        Toast.makeText(getContext(), "Booking failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Canceled failed", Toast.LENGTH_SHORT).show();
                     }
                 }
 

@@ -15,8 +15,13 @@ public interface BookService {
     Call<List<PlayBean>> getPlays();
 
     @POST("api/user/book")
-//    Call<Void> bookPlay(@Query("email") String email, @Query("title") String title);
     Call<UserResponse> bookPlay(@Body PlayDTO playDTO);
+
+    @GET("api/user/booked") // 这里填写你的后端 API 地址
+    Call<List<PlayBean>> getBookedPlays();
+
+    @POST("api/user/cancel")
+    Call<UserResponse> cancelPlay(@Body PlayDTO playDTO);
 }
 
 

@@ -3,7 +3,7 @@ package com.example.captioner.model;
 public class PlayDTO {
     private String title;
 
-    public String getTitle() {
+    public String getTitle(String title) {
         return title;
     }
 

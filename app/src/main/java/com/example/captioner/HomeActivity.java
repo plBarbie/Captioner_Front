@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
 
         bookedButton.setOnClickListener(v -> {
 //             Start the booked activity
-//            startActivity(new Intent(HomeActivity.this, BookedActivity.class));
+            startActivity(new Intent(HomeActivity.this, BookedActivity.class));
             finish();
         });
     }
