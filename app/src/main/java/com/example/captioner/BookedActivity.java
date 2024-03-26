@@ -107,4 +107,7 @@ public class BookedActivity extends AppCompatActivity {
         }
         Toast.makeText(BookedActivity.this, errorMessage, Toast.LENGTH_LONG).show();
     }
+    public void refresh() {
+        onCreate(null);
+    }
 }

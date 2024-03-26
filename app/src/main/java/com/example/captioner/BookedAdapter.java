@@ -32,9 +32,9 @@ public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
 
         // 为“cancel”按钮设置点击监听器
         baseViewHolder.getView(R.id.cancel_button).setOnClickListener(v -> {
-            // 创建 PlayDTO 仅包含 title 用于预订操作
+            // 创建 PlayDTO 仅包含 title 用于取消操作
             PlayDTO playDTO = new PlayDTO();
-            playDTO.getTitle(play.getTitle());
+            playDTO.setTitle(play.getTitle());
 
             // 使用Retrofit发起网络请求
             BookService service = RetrofitClient.getClient("http://172.20.10.5:8080/").create(BookService.class);
