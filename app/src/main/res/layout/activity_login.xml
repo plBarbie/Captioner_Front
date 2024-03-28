@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:text="test1@163.com"
             android:hint="Enter your email"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -73,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:text="1234567"
             android:hint="Enter your password"
             android:inputType="textPassword"
             tools:ignore="TouchTargetSizeCheck" />

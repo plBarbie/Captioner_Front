@@ -26,8 +26,8 @@ public interface BookService {
 //    @GET("api/user/getDialogues")
 //    Call<List<Dialogue>> getDialogues(@Query("playId") String playTitle, @Query("currentTime") String currentTime);
 
-    @GET("api/user/getDialogues")
-    Call<String> getCurrentDialogue(String formattedNow, int id, String startTime);
+    @GET("api/user/display")
+    Call<String> getCurrentDialogue(@Body DisplayRequest displayRequest);
 }
 
 

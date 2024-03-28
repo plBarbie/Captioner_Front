@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.captioner.model.PlayBean;
 import com.example.captioner.network.BookService;
+import com.example.captioner.network.DisplayRequest;
 import com.example.captioner.network.RetrofitClient;
 
 import java.time.LocalDateTime;
@@ -61,6 +62,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         if (currentPlay != null) {
             // 在这里处理传递过来的 PlayBean 对象
+            Toast.makeText(this, "获取了当前播放节目信息", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "无法获取当前播放节目信息", Toast.LENGTH_SHORT).show();
         }
@@ -101,6 +103,7 @@ public class DisplayActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void sendCurrentTimeAndPlayInfo(String formattedNow, PlayBean currentPlay) {
         String backendUrl = getString(R.string.backend_url);
         Retrofit retrofit = RetrofitClient.getClient(backendUrl);
@@ -109,7 +112,7 @@ public class DisplayActivity extends AppCompatActivity {
         // 转换当前播放节目的开始时间为字符串
         String startTime = currentPlay.getStartTime();
 
-        Call<String> call = bookingService.getCurrentDialogue(formattedNow, currentPlay.getId(), startTime);
+        Call<String> call = bookingService.getCurrentDialogue(new DisplayRequest(currentPlay, LocalDateTime.now()));
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

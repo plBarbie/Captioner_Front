@@ -30,9 +30,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class BookedActivity extends AppCompatActivity {
-
+    private static final String TAG = "BookedActivity";
     private List<PlayBean> plays = new ArrayList<>();
     private BookedAdapter bookedAdapter;
+    private BookService bookService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,25 +63,47 @@ public class BookedActivity extends AppCompatActivity {
                     now = LocalDateTime.parse(nowString,dateTimeFormatter);
                     startTime = LocalDateTime.parse(bookedAdapter.getItem(position).getStartTime(),dateTimeFormatter);
                     endTime = LocalDateTime.parse(bookedAdapter.getItem(position).getEndTime(), dateTimeFormatter);
-                    if (startTime.isAfter(now) && endTime.isBefore(now)) {
+                    if (startTime.isBefore(now) && endTime.isAfter(now)) {
                         startActivity(new Intent(BookedActivity.this, DisplayActivity.class));
                         PlayBean currentPlay = (PlayBean) adapter.getItem(position);
+//                        Call<String> call = bookService.getCurrentDialogue(new DisplayRequest(currentPlay, LocalDateTime.now()));
+//
+//                        call.enqueue(new Callback<String>() {
+//                            @Override
+//                            public void onResponse(Call<String> call, Response<String> response) {
+//                                if (response.isSuccessful()) {
+//                                    String currentDialogue = response.body();
+//                                    if (currentDialogue != null) {
+//                                        // 在 TextView 中显示当前台词
+//                                        dialogueTextView.setText(currentDialogue);
+//                                    } else {
+//                                        Toast.makeText(DisplayActivity.this, "无法获取当前台词", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                } else {
+//                                    Toast.makeText(DisplayActivity.this, "获取当前台词失败：" + response.code(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<String> call, Throwable t) {
+//                                Log.e("DisplayActivity", "Failed to get current dialogue", t);
+//                                Toast.makeText(DisplayActivity.this, "Failed to get current dialogue. Please try again.", Toast.LENGTH_LONG).show();
+//                            }
+//                        });
                         Intent intent = new Intent(BookedActivity.this, DisplayActivity.class);
                         //先写getid，后面怎么定义play再改
                         intent.putExtra("currentPlay", currentPlay.getId());
                         startActivity(intent);
-                    } else if (endTime.isAfter(now)) {
+                    } else if (endTime.isBefore(now)) {
                         Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle() + "已播放完毕", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle() + "还未到播放时间"+nowString+now+bookedAdapter.getItem(position).getStartTime(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(BookedActivity.this, DisplayActivity.class));
+                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle() + "还未到播放时间", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle()+"错了", Toast.LENGTH_SHORT).show();
 
                 }
-//                Toast.makeText(BookingActivity.this, bookingAdapter.getItem(position).getTitle()+"", Toast.LENGTH_SHORT).show();
             }
         });
 
