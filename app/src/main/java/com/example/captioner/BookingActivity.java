@@ -63,7 +63,7 @@ public class BookingActivity extends AppCompatActivity {
                     startTime = LocalDateTime.parse(bookingAdapter.getItem(position).getStartTime(),dateTimeFormatter);
                     endTime = LocalDateTime.parse(bookingAdapter.getItem(position).getEndTime(), dateTimeFormatter);
                     if (startTime.isAfter(now) && endTime.isBefore(now)) {
-//                        startActivity(new Intent(BookingActivity.this, DisplayActivity.class));
+                        startActivity(new Intent(BookingActivity.this, DisplayActivity.class));
                         PlayBean currentPlay = (PlayBean) adapter.getItem(position);
                         Intent intent = new Intent(BookingActivity.this, DisplayActivity.class);
                         //先写getid，后面怎么定义play再改
