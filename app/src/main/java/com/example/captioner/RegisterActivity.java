@@ -33,18 +33,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(v -> registerUser());
     }
-//    String backendUrl = getString(R.string.backend_url);
+
 
     private void registerUser() {
         String name = nameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-
+        String backendUrl = getString(R.string.backend_url);
         // 创建你的RegisterRequest对象
         RegisterRequest registerRequest = new RegisterRequest(name, email, password);
 
         // 假设LoginService也用于注册，你可能需要根据实际情况调整
-        RegisterService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(RegisterService.class);
+        RegisterService service = RetrofitClient.getClient(backendUrl).create(RegisterService.class);
         Call<UserResponse> call = service.registerUser(registerRequest);
 
         call.enqueue(new Callback<UserResponse>() {

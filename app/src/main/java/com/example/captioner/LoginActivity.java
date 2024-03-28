@@ -44,13 +44,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
         });
     }
-//    String backendUrl = getString(R.string.backend_url);
+
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-
+        String backendUrl = getString(R.string.backend_url);
         // 假设你已经创建了RetrofitClient类和LoginService接口
-        LoginService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(LoginService.class);
+        LoginService service = RetrofitClient.getClient(backendUrl).create(LoginService.class);
         Call<UserResponse> call = service.loginUser(new LoginRequest(email, password));
 
         call.enqueue(new Callback<UserResponse>() {

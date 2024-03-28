@@ -89,7 +89,9 @@ public class DisplayActivity extends AppCompatActivity {
             // Hide the horizontal hint text after 3 seconds
             new Handler().postDelayed(() -> horizontalHintText.setVisibility(View.GONE), 3000); // 3000 milliseconds delay
         }
+
     }
+
 
     // Detects the orientation of the current screen
     public static class ScreenUtils {
@@ -98,8 +100,10 @@ public class DisplayActivity extends AppCompatActivity {
             return orientation == Configuration.ORIENTATION_LANDSCAPE;
         }
     }
+
     private void sendCurrentTimeAndPlayInfo(String formattedNow, PlayBean currentPlay) {
-        Retrofit retrofit = RetrofitClient.getClient("http://10.29.144.153:8014/");
+        String backendUrl = getString(R.string.backend_url);
+        Retrofit retrofit = RetrofitClient.getClient(backendUrl);
         BookService bookingService = retrofit.create(BookService.class);
 
         // 转换当前播放节目的开始时间为字符串

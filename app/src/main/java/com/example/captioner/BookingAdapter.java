@@ -20,8 +20,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookingAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
-    public BookingAdapter(@Nullable List<PlayBean> data) {
+    private final String backendUrl;
+
+    public BookingAdapter(@Nullable List<PlayBean> data, String backendUrl) {
         super(R.layout.booking_list_item, data);
+        this.backendUrl = backendUrl;
     }
 
     @Override
@@ -36,8 +39,8 @@ public class BookingAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
             PlayDTO playDTO = new PlayDTO();
             playDTO.setTitle(play.getTitle());
 
-            // 使用Retrofit发起网络请求
-            BookService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(BookService.class);
+            // 使用 Retrofit 发起网络请求
+            BookService service = RetrofitClient.getClient(backendUrl).create(BookService.class);
             Call<UserResponse> call = service.bookPlay(playDTO);
             call.enqueue(new Callback<UserResponse>() {
                 @Override

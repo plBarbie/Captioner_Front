@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backend_url">http://10.29.144.153:8014/</string>
+</resources>

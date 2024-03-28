@@ -20,8 +20,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
-    public BookedAdapter(@Nullable List<PlayBean> data) {
+
+    private final String backendUrl;
+
+    public BookedAdapter(@Nullable List<PlayBean> data, String backendUrl) {
         super(R.layout.booked_list_item, data);
+        this.backendUrl = backendUrl;
     }
 
     @Override
@@ -36,25 +40,25 @@ public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
             PlayDTO playDTO = new PlayDTO();
             playDTO.setTitle(play.getTitle());
 
-            // 使用Retrofit发起网络请求
-            BookService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(BookService.class);
+            // 使用 Retrofit 发起网络请求
+            BookService service = RetrofitClient.getClient(backendUrl).create(BookService.class);
             Call<UserResponse> call = service.cancelPlay(playDTO);
             call.enqueue(new Callback<UserResponse>() {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                     if (response.isSuccessful()) {
-                        // 预订成功
-                        Toast.makeText(getContext(), "Canceled successfully!", Toast.LENGTH_SHORT).show();
+                        // 取消成功
+                        Toast.makeText(baseViewHolder.itemView.getContext(), "Canceled successfully!", Toast.LENGTH_SHORT).show();
                     } else {
                         // 处理错误情况
-                        Toast.makeText(getContext(), "Canceled failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(baseViewHolder.itemView.getContext(), "Canceled failed", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<UserResponse> call, Throwable t) {
                     // 网络错误处理
-                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(baseViewHolder.itemView.getContext(), "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
         });
