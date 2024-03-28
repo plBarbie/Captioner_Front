@@ -37,7 +37,7 @@ public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
             playDTO.setTitle(play.getTitle());
 
             // 使用Retrofit发起网络请求
-            BookService service = RetrofitClient.getClient("http://172.20.10.5:8080/").create(BookService.class);
+            BookService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(BookService.class);
             Call<UserResponse> call = service.cancelPlay(playDTO);
             call.enqueue(new Callback<UserResponse>() {
                 @Override

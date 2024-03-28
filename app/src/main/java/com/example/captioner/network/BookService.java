@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface BookService {
     @GET("api/user/booking") // 这里填写你的后端 API 地址
@@ -22,6 +23,9 @@ public interface BookService {
 
     @POST("api/user/cancel")
     Call<UserResponse> cancelPlay(@Body PlayDTO playDTO);
+
+    @GET("api/user/getDialogues")
+    Call<List<Dialogue>> getDialogues(@Query("playId") String playTitle, @Query("currentTime") String currentTime);
 }
 
 

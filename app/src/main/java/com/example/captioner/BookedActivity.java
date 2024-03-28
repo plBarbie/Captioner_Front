@@ -3,12 +3,16 @@ package com.example.captioner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.captioner.model.PlayBean;
 import com.example.captioner.network.BookService;
 import com.example.captioner.network.RetrofitClient;
@@ -41,14 +45,33 @@ public class BookedActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.booked_plays);
         recyclerView.setAdapter(bookedAdapter);
 
-//        bookingAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-//                Toast.makeText(BookingActivity.this, bookingAdapter.getItem(position).getTitle()+"", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        bookedAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+//                LocalDateTime now = LocalDateTime.now();
+//                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//                try {
+//                    LocalDateTime startTime = LocalDateTime.parse(bookedAdapter.getItem(position).getStartTime(),dateTimeFormatter);
+//                    LocalDateTime endTime = LocalDateTime.parse(bookedAdapter.getItem(position).getEndTime(),dateTimeFormatter);
+//                    if(startTime.isAfter(now)&&endTime.isBefore(now)){
+//                        startActivity(new Intent(BookedActivity.this, DisplayActivity.class));
+//                    }
+//                    else if(endTime.isAfter(now)){
+//                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle()+"已播放完毕", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else {
+//                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle()+"还未到播放时间", Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle()+"", Toast.LENGTH_SHORT).show();
+
+            }
+        });
         // 使用 RetrofitClient 获取 Retrofit 实例
-        Retrofit retrofit = RetrofitClient.getClient("http://172.20.10.5:8080/");
+        Retrofit retrofit = RetrofitClient.getClient("http://10.29.144.153:8014/");
 
         // 使用 Retrofit 实例创建 API 接口实例
         BookService bookService = retrofit.create(BookService.class);

@@ -21,6 +21,15 @@
         android:layout_below="@id/horizontalHintText">
 
         <!-- Display panel content goes here -->
+        <TextView
+            android:id="@+id/dialogueTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/clientDisplayPanel"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="18sp" />
+
 
     </FrameLayout>
 

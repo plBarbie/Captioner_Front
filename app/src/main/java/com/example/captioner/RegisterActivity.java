@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterRequest registerRequest = new RegisterRequest(name, email, password);
 
         // 假设LoginService也用于注册，你可能需要根据实际情况调整
-        RegisterService service = RetrofitClient.getClient("http://10.29.1.170:8080/").create(RegisterService.class);
+        RegisterService service = RetrofitClient.getClient("http://10.29.144.153:8014/").create(RegisterService.class);
         Call<UserResponse> call = service.registerUser(registerRequest);
 
         call.enqueue(new Callback<UserResponse>() {

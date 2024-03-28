@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Captioner</string>
     <string name="welcome">Welcome to Captioner!</string>
+    <string name="ip">http://10.29.144.153:8014/</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
