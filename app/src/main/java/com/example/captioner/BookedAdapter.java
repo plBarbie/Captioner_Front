@@ -30,7 +30,7 @@ public class BookedAdapter extends BaseQuickAdapter<PlayBean, BaseViewHolder> {
 
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, PlayBean play) {
-        baseViewHolder.setText(R.id.play_title, play.getTitle());
+        baseViewHolder.setText(R.id.play_title, play.getSubtitle());
         baseViewHolder.setText(R.id.play_start_time, "Start Time: " + play.getStartTime());
         baseViewHolder.setText(R.id.play_end_time, "End Time: " + play.getEndTime());
 

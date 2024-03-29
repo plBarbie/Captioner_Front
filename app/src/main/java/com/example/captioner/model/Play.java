@@ -14,6 +14,9 @@ public class Play {
     @SerializedName("play_end_time")
     private LocalDateTime endTime;
 
+    @SerializedName("subtitle_name")
+    private String subtitle;
+
     public String getTitle() {
         return title;
     }
@@ -36,6 +39,14 @@ public class Play {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 }
 

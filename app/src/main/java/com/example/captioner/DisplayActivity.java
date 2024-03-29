@@ -63,6 +63,8 @@ public class DisplayActivity extends AppCompatActivity {
         if (currentPlay != null) {
             // 在这里处理传递过来的 PlayBean 对象
             Toast.makeText(this, "获取了当前播放节目信息", Toast.LENGTH_SHORT).show();
+            // 发送当前时间和播放信息
+            sendCurrentTimeAndPlayInfo(formattedNow, currentPlay);
         } else {
             Toast.makeText(this, "无法获取当前播放节目信息", Toast.LENGTH_SHORT).show();
         }
@@ -93,6 +95,7 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
     }
+
 
 
     // Detects the orientation of the current screen
