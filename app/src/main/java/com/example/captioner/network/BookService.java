@@ -1,5 +1,6 @@
 package com.example.captioner.network;
 
+import com.example.captioner.model.DialogueDTO;
 import com.example.captioner.model.PlayBean;
 import com.example.captioner.model.PlayDTO;
 
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface BookService {
     @GET("api/user/booking") // 这里填写你的后端 API 地址
@@ -26,8 +28,8 @@ public interface BookService {
 //    @GET("api/user/getDialogues")
 //    Call<List<Dialogue>> getDialogues(@Query("playId") String playTitle, @Query("currentTime") String currentTime);
 
-    @GET("api/user/display")
-    Call<String> getCurrentDialogue(@Body DisplayRequest displayRequest);
+    @POST("api/user/currentdialogue")
+    Call<List<DialogueDTO>> getCurrentDialogue(@Query("playTitle") String playTitle);
 }
 
 

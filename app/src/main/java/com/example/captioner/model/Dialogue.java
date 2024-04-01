@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import org.threeten.bp.LocalDateTime;
 
 public class Dialogue {
+    @SerializedName("dialogue_id")
+    private int id;
     @SerializedName("dialogue_start_time")
     private LocalDateTime startTime;
 
@@ -13,6 +15,8 @@ public class Dialogue {
 
     @SerializedName("dialogue_text")
     private String text;
+    @SerializedName("subtitle_name")
+    private String subtitle;
 
     public LocalDateTime getStartTime() {
         return startTime;

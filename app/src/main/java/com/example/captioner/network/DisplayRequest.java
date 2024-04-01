@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DisplayRequest {
     PlayBean playBean;
+    String title;
     LocalDateTime now = LocalDateTime.now();
 
-    public DisplayRequest(PlayBean playBean, LocalDateTime localDateTime) {
-        this.playBean = playBean;
-        this.now = localDateTime;
+    public DisplayRequest(String title) {
+        this.title = title;
     }
 
     public PlayBean getPlayBean() {
