@@ -37,7 +37,8 @@ public class BookingActivity extends AppCompatActivity {
 
         Button returnButton = findViewById(R.id.returnButton);
         returnButton.setOnClickListener(v -> {
-            startActivity(new Intent(BookingActivity.this, HomeActivity.class));
+//            startActivity(new Intent(BookingActivity.this, HomeActivity.class));
+            startActivity(new Intent(BookingActivity.this, BookedActivity.class));
             finish();
         });
 

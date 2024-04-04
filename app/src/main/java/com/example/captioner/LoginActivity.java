@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                     UserResponse responseBody = response.body();
                     if (responseBody != null && responseBody.isSuccess()) {
                         // 登录成功逻辑
-                        System.out.println("niubi");
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this, BookingActivity.class));
                         Toast.makeText(LoginActivity.this, responseBody.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         // 登录失败逻辑

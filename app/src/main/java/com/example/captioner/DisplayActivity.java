@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.captioner.model.DialogueDTO;
@@ -25,11 +29,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DisplayActivity extends AppCompatActivity {
+    private final Handler handler = new Handler();
     Runnable runnable;
     private TextView dialogueTextView;
     private FrameLayout displayPanel;
     private boolean isBlackBackground = false;
-    private final Handler handler = new Handler();
 
     // 将时间字符串转换为秒数
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -70,66 +74,43 @@ public class DisplayActivity extends AppCompatActivity {
         // 获取传递的 PlayBean 对象
         List<DialogueDTO> dialogueList = (List<DialogueDTO>) getIntent().getSerializableExtra("dialogueList");
 
-//        String playStartTimeString = (String) getIntent().getSerializableExtra("playStartTime");
-//        String nowString = (String) getIntent().getSerializableExtra("now");
-
-
-        // 解析播放开始时间字符串为 LocalDateTime 对象
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        LocalDateTime playStartTime = LocalDateTime.parse(playStartTimeString, formatter);
-//        LocalDateTime now = LocalDateTime.parse(nowString, formatter);
-//        // 计算时间差
-//        long secondsDifference = Duration.between(playStartTime, now).getSeconds();
-
-
         if (dialogueList != null) {
             // 在这里处理传递过来的 PlayBean 对象
-//            Log.e(TAG, dialogueList.toString());
-//            Log.e(TAG, "获取了当前播放节目信息");
-
             int targetTime = (int) getIntent().getSerializableExtra("targetTime");
-//            Log.e(TAG, "Seconds difference: " + targetTime);
 
             int position = 0;
-            //如果当前话剧已经播放 得到当前进入得时间与开始时间得差值
-//            int targetTime = 47;//这里138秒 就是差值  然后最近就2分19秒
-//            int targetTime = (int) secondsDifference;
-
             // 初始化最小差值为一个足够大的值
             int minDifference = Integer.MAX_VALUE;
-            String nearestTimeNode = null;
+//            String nearestTimeNode = null;
             //找到最接近得时间节点
             for (int i = 0; i < dialogueList.size(); i++) {
                 int seconds = convertToSeconds(dialogueList.get(i).getDialogueStartTime());
                 int difference = Math.abs(targetTime - seconds);
                 if (difference < minDifference) {
                     minDifference = difference;
-                    nearestTimeNode = dialogueList.get(i).getDialogueStartTime();
+//                    nearestTimeNode = dialogueList.get(i).getDialogueStartTime();
                     position = i;
                 }
             }
-//            runTextView(dialogueList, position);
             //输出最接近的时间节点
 //            Log.d(TAG, "onCreate: " + "与时间 " + targetTime + " 秒最接近的时间节点是：" + nearestTimeNode);
 
-
-            //TODO 如果当前进入时间时间点刚好播放
             //开始时间第一个节点
             LocalTime locFirstTime = LocalTime.parse(dialogueList.get(0).getDialogueStartTime());
-            long millisecondFirstTime = locFirstTime.toSecondOfDay()* 1000;
-            long timeDelay = (int)(millisecondFirstTime - (targetTime * 1000));
-            if(timeDelay > 0){
+            long millisecondFirstTime = locFirstTime.toSecondOfDay() * 1000L;
+            long timeDelay = (int) (millisecondFirstTime - (targetTime * 1000));
+            if (timeDelay > 0) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        runTextView(dialogueList,0);
+                        runTextView(dialogueList, 0);
                     }
-                },timeDelay);
-            }else {
-                runTextView(dialogueList,position);
+                }, timeDelay);
+            } else {
+                runTextView(dialogueList, position);
             }
         } else {
-            Toast.makeText(this, "无法获取当前播放节目信息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to load this play.", Toast.LENGTH_SHORT).show();
         }
 
         // Click activity of lightButton
@@ -145,10 +126,87 @@ public class DisplayActivity extends AppCompatActivity {
             isBlackBackground = !isBlackBackground;
         });
 
-        // TODO: Click activity of setUpButton
         setupButton.setOnClickListener(v -> {
+            // Create a dialog builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(DisplayActivity.this);
+            // Set the title and message for the dialog
+            builder.setTitle("Adjust font size and select font color:");
+//            builder.setMessage("Adjust font size and select font color:");
 
+            // Inflate the custom layout for the dialog
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_setup, null);
+            builder.setView(dialogView);
+
+            // Find views in the custom layout
+            SeekBar seekBarFontSize = dialogView.findViewById(R.id.seekBarFontSize);
+            TextView textViewFontSize = dialogView.findViewById(R.id.textViewFontSize);
+            Spinner spinnerFontColor = dialogView.findViewById(R.id.spinnerFontColor);
+
+            // Initialize font size seek bar and text view
+            int currentFontSize = (int) dialogueTextView.getTextSize();
+            seekBarFontSize.setProgress(currentFontSize);
+            textViewFontSize.setText("Font Size: " + currentFontSize);
+
+            // Define the font size seek bar listener
+            seekBarFontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    // Update the font size text view as the seek bar changes
+                    textViewFontSize.setText("Font Size: " + progress);
+                    dialogueTextView.setTextSize(progress);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            });
+
+            // Define the font color spinner listener
+            spinnerFontColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    // Set the font color based on the selected item in the spinner
+                    String selectedColor = parent.getItemAtPosition(position).toString();
+                    switch (selectedColor) {
+                        case "Black":
+                            dialogueTextView.setTextColor(Color.BLACK);
+                            break;
+                        case "White":
+                            dialogueTextView.setTextColor(Color.WHITE);
+                            break;
+                        case "Red":
+                            dialogueTextView.setTextColor(Color.RED);
+                            break;
+                        case "Yellow":
+                            dialogueTextView.setTextColor(Color.YELLOW);
+                            break;
+                        case "Blue":
+                            dialogueTextView.setTextColor(Color.BLUE);
+                            break;
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+
+            // Add buttons for positive and negative actions
+            builder.setPositiveButton("Save", (dialog, which) -> {
+                // Save the selected options if needed
+                // You can add your save logic here
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                // Dismiss the dialog without saving
+                dialog.dismiss();
+            });
+
+            // Create and show the dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
+
 
         // If not landscape, show the hint text for 3s
         if (!isLandscape) {
@@ -157,15 +215,8 @@ public class DisplayActivity extends AppCompatActivity {
             // Hide the horizontal hint text after 3 seconds
             new Handler().postDelayed(() -> horizontalHintText.setVisibility(View.GONE), 3000); // 3000 milliseconds delay
         }
-
     }
 
-    /**
-     * 显示字幕
-     *
-     * @param textBeanList
-     * @param position     默认为0  只有当前话剧已经开始 然后才进来 找到最近得节点 传入对应节点得position 进行播放
-     */
     private void runTextView(List<DialogueDTO> textBeanList, int position) {
 
         runnable = new Runnable() {
@@ -193,7 +244,6 @@ public class DisplayActivity extends AppCompatActivity {
         };
         Thread thread = new Thread(runnable);
         thread.start();
-
     }
 
     @Override

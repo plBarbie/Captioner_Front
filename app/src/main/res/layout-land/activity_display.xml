@@ -28,7 +28,7 @@
             android:layout_below="@id/clientDisplayPanel"
             android:gravity="center"
             android:padding="16dp"
-            android:textSize="18sp" />
+            android:textSize="28sp" />
 
 
     </FrameLayout>

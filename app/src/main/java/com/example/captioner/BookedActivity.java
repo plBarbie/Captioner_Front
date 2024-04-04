@@ -52,7 +52,8 @@ public class BookedActivity extends AppCompatActivity {
 
         Button returnButton = findViewById(R.id.returnButton);
         returnButton.setOnClickListener(v -> {
-            startActivity(new Intent(BookedActivity.this, HomeActivity.class));
+//            startActivity(new Intent(BookedActivity.this, HomeActivity.class));
+            startActivity(new Intent(BookedActivity.this, BookingActivity.class));
             finish();
         });
 
@@ -90,21 +91,17 @@ public class BookedActivity extends AppCompatActivity {
                                     String s = GsonUtils.toJson(dialogueList);
                                     Log.d(TAG, "onResponse: "+s);
                                     if (!dialogueList.isEmpty()) {
-                                        // 创建Intent
-//                                        Log.e("DisplayActivity", dialogueList.toString());
-//                                        Toast.makeText(BookedActivity.this, "打开了display", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(BookedActivity.this, DisplayActivity.class);
                                         // 将对话列表作为额外数据放入Intent中
                                         intent.putExtra("dialogueList", new ArrayList<>(dialogueList));
-//                                        intent.putExtra("playStartTime", bookedAdapter.getItem(position).getStartTime());
                                         intent.putExtra("targetTime", targetTime);
                                         // 启动DisplayActivity并传递Intent
                                         startActivity(intent);
                                     } else {
-                                        Toast.makeText(BookedActivity.this, "对话列表为空", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(BookedActivity.this, "Dialogue is empty.", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(BookedActivity.this, "获取对话列表失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BookedActivity.this, "Failed to load dialogues.", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -114,14 +111,10 @@ public class BookedActivity extends AppCompatActivity {
                                 Toast.makeText(BookedActivity.this, "Failed to get current dialogue. Please try again.", Toast.LENGTH_LONG).show();
                             }
                         });
-//                        Intent intent = new Intent(BookedActivity.this, DisplayActivity.class);
-//                        //先写getid，后面怎么定义play再改
-//                        intent.putExtra("currentPlay", currentPlay.getId());
-//                        startActivity(intent);
                     } else if (endTime.isBefore(now)) {
-                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle() + "已播放完毕", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getSubtitle() + " has been played.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getTitle() + "还未到播放时间", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookedActivity.this, bookedAdapter.getItem(position).getSubtitle() + " hasn't played yet.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -28,8 +28,8 @@
             android:layout_below="@id/clientDisplayPanel"
             android:gravity="center"
             android:padding="16dp"
-            android:text="正在加载"
-            android:textSize="18sp" />
+            android:text="Loading..."
+            android:textSize="28sp" />
 
     </FrameLayout>
 

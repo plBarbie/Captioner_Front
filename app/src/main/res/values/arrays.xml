@@ -9,4 +9,13 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="font_colors">
+        <item>Black</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Blue</item>
+        <!-- Add more color options as needed -->
+    </string-array>
 </resources>
